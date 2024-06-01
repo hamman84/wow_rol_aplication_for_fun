@@ -19,12 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import domain.Character
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
-import rol_game.composeapp.generated.resources.Res
-import rol_game.composeapp.generated.resources.draenei
+import util.getRaceImage
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -33,18 +33,22 @@ fun CharacterTag(
     onClickTag: () -> Unit,
     characters: Character,
 ) {
+    val raceImage = getRaceImage(characters.race)
     ElevatedCard(
-        modifier = modifier.padding(10.dp).clickable { onClickTag() },
+        modifier = modifier
+            .padding(10.dp)
+            .clickable { onClickTag() },
         shape = ShapeDefaults.Small
     ){
         Row(
-            modifier = modifier.fillMaxWidth().padding(8.dp),
+            modifier = modifier.fillMaxWidth().padding(vertical = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ){
             Image(
-                painter = painterResource(Res.drawable.draenei),
+                painter = painterResource(raceImage),
                 contentDescription = null,
+                contentScale = ContentScale.Crop,
                 modifier = Modifier.size(50.dp).clip(CircleShape)
             )
             Spacer(modifier = Modifier.size(12.dp))

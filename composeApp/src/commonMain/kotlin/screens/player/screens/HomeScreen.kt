@@ -52,7 +52,7 @@ class HomeScreen : Screen {
             },
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = { Text(text = "Personajes de: ${viewModel.activeUser?.id ?: "Usuario"}") },
+                    title = { Text(text = "Personajes de: ${viewModel.activeUser?.id}") },
                     actions = {
                         IconButton(
                             onClick = {

@@ -13,7 +13,9 @@ import rol_game.composeapp.generated.resources.night_elf
 val raceList = listOf(
     Race(
         raceName = "Huargen",
-        raceImage = Res.drawable.Huargen,
+        raceImage = mapOf(
+            "Huargen" to Res.drawable.Huargen
+        ),
         racialStats = mapOf(
             "Fuerza" to 2,
             "Constitución" to 1
@@ -21,7 +23,9 @@ val raceList = listOf(
     ),
     Race(
         raceName = "Draenei",
-        raceImage = Res.drawable.draenei,
+        raceImage = mapOf(
+            "Draenei" to Res.drawable.draenei
+        ),
         racialStats = mapOf(
             "Carisma" to 2,
             "Fuerza" to 1
@@ -29,7 +33,9 @@ val raceList = listOf(
     ),
     Race(
         raceName = "Gnomo",
-        raceImage = Res.drawable.Gnomo,
+        raceImage = mapOf(
+            "Gnomo" to Res.drawable.Gnomo
+        ),
         racialStats = mapOf(
             "Inteligencia" to 2,
             "Destreza" to 1
@@ -37,7 +43,9 @@ val raceList = listOf(
     ),
     Race(
         raceName = "Pandaren",
-        raceImage = Res.drawable.Pandaren,
+        raceImage = mapOf(
+            "Pandaren" to Res.drawable.Pandaren
+        ),
         racialStats = mapOf(
             "Sabiduría" to 2,
             "Destreza" to 1
@@ -45,7 +53,9 @@ val raceList = listOf(
     ),
     Race(
         raceName = "Orco",
-        raceImage = Res.drawable.Orco,
+        raceImage = mapOf(
+            "Orco" to Res.drawable.Orco
+        ),
         racialStats = mapOf(
             "Fuerza" to 2,
             "Constitución" to 1
@@ -53,7 +63,9 @@ val raceList = listOf(
     ),
     Race(
         raceName = "Elfo de la Noche",
-        raceImage = Res.drawable.night_elf,
+        raceImage = mapOf(
+            "Elfo de la Noche" to Res.drawable.night_elf
+        ),
         racialStats = mapOf(
             "Destreza" to 2,
             "Sabiduría" to 1

@@ -27,7 +27,7 @@ class Character : EmbeddedRealmObject {
     var classType: String = ""
     var experience: Int = 0
     var stats: BasicStats? = null
-    var inventory: ItemLoot? = null
+    var inventory: Inventory? = null
     var equipment: ItemLooted? = null
     var owner: String = ""
 }
@@ -50,7 +50,7 @@ val classList = listOf(
 
 data class Race @OptIn(ExperimentalResourceApi::class) constructor(
     val raceName: String,
-    val raceImage: DrawableResource,
+    val raceImage: Map<String, DrawableResource>,
     val racialStats: Map<String, Int>,
 )
 
@@ -63,10 +63,10 @@ class BasicStats : EmbeddedRealmObject {
     var wisdom: Int = 0
 }
 
-class ItemLoot : EmbeddedRealmObject {
+class Inventory : EmbeddedRealmObject {
     var gold: Int = 0
     var silver: Int = 0
-    var inventory: RealmList<ItemLooted> = realmListOf()
+    var bagContent: RealmList<ItemLooted> = realmListOf()
 }
 
 class ItemLooted : EmbeddedRealmObject {

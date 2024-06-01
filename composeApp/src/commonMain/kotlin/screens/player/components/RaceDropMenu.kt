@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import domain.raceList
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import util.getRaceImage
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
@@ -60,6 +61,7 @@ fun RaceDropMenu(
             scrollState = scrollState
         ) {
             raceList.forEach {
+                val imageResourceRace = getRaceImage(it.raceName)
                 DropdownMenuItem(
                     onClick = {
                         selectedType = it.raceName
@@ -72,7 +74,7 @@ fun RaceDropMenu(
                     },
                     text = { Text(it.raceName) },
                     leadingIcon = { Image(
-                        painter = painterResource(it.raceImage),
+                        painter = painterResource(imageResourceRace),
                         contentDescription = null,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.size(60.dp).clip(CircleShape)
