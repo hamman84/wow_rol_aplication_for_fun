@@ -30,9 +30,11 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import domain.BasicStats
 import domain.Character
 import domain.User
+import domain.abilityList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import screens.player.components.AbilityRadioButtons
 import screens.player.components.ClassDropMenu
 import screens.player.components.CounterStats
 import screens.player.components.RaceDropMenu
@@ -51,6 +53,8 @@ class CreateCharacterScreen : Screen {
         val activeAdd = remember { mutableStateOf(true) }
         val selectedClass = remember { mutableStateOf("") }
         val selectedRace = remember { mutableStateOf<Pair<String, Map<String, Int>>?>(null) }
+        val abilitySelected = remember { mutableListOf<String>() }
+        val abilityStates = remember { mutableStateOf(abilityList.associate { it.statOwner to 0 }) }
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -175,6 +179,24 @@ class CreateCharacterScreen : Screen {
                         activeAdd.value = remainingPoints.value != 0
                     }
                 )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                AbilityRadioButtons(
+                    abilityStates = abilityStates.value,
+                    onAbilitySelected = { ability, isChecked ->
+                        abilityStates.value = abilityStates.value.toMutableMap().apply {
+                            if (isChecked){
+                                put(ability, 2)
+                                abilitySelected.add(ability)
+                            }else {
+                                remove(ability)
+                                abilitySelected.remove(ability)
+                            }
+                        }
+                        println(abilitySelected)
+                    }
+                )
+
                 Spacer(modifier = Modifier.height(40.dp))
 
                 Button(
@@ -196,8 +218,10 @@ class CreateCharacterScreen : Screen {
                                         stats = BasicStats().apply {
                                             strength = pointsPerAbility.value["Fuerza"] ?: 0
                                             dexterity = pointsPerAbility.value["Destreza"] ?: 0
-                                            constitution = pointsPerAbility.value["Constitución"] ?: 0
-                                            intelligence = pointsPerAbility.value["Inteligencia"] ?: 0
+                                            constitution =
+                                                pointsPerAbility.value["Constitución"] ?: 0
+                                            intelligence =
+                                                pointsPerAbility.value["Inteligencia"] ?: 0
                                             charisma = pointsPerAbility.value["Carisma"] ?: 0
                                             wisdom = pointsPerAbility.value["Sabiduría"] ?: 0
                                         }

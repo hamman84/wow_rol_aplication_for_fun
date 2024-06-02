@@ -3,7 +3,7 @@ package data
 
 import domain.BasicStats
 import domain.Character
-import domain.ItemLoot
+import domain.Inventory
 import domain.ItemLooted
 import domain.User
 import io.realm.kotlin.Realm
@@ -36,7 +36,7 @@ object MongoDB : MongoRepository {
                 schema = setOf(
                     User::class,
                     Character::class,
-                    ItemLoot::class,
+                    Inventory::class,
                     ItemLooted::class,
                     BasicStats::class
                 )
@@ -45,7 +45,6 @@ object MongoDB : MongoRepository {
                     add(query = realm.query<User>(query = "owner_id == $0", user.id))
                 }
                 .schemaVersion(0)
-                .initialData { copyToRealm(User().apply { userName = user.identities.first().id }) }
                 .build()
 
             realm = Realm.open(config)

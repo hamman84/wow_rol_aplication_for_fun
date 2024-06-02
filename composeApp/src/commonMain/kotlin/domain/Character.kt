@@ -5,8 +5,6 @@ import io.realm.kotlin.types.EmbeddedRealmObject
 import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
-import org.jetbrains.compose.resources.DrawableResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.mongodb.kbson.BsonObjectId
 
 
@@ -48,10 +46,14 @@ val classList = listOf(
     "Evocador"
 )
 
-data class Race @OptIn(ExperimentalResourceApi::class) constructor(
+data class Race(
     val raceName: String,
-    val raceImage: Map<String, DrawableResource>,
-    val racialStats: Map<String, Int>,
+    val racialStats: Map<String, Int>
+)
+
+data class CharacterAbility(
+    val statOwner: String,
+    val abilityClass: Map<String, Int>
 )
 
 class BasicStats : EmbeddedRealmObject {

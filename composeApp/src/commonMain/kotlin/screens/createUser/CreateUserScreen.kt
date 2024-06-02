@@ -23,8 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.launch
@@ -39,7 +39,7 @@ class CreateUserScreen : Screen {
     @OptIn(ExperimentalResourceApi::class)
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<CreateUserViewModel>()
+        val viewModel = rememberScreenModel { CreateUserViewModel() }
         val navigator = LocalNavigator.currentOrThrow
         val scope = rememberCoroutineScope()
         val user = remember { mutableStateOf("") }

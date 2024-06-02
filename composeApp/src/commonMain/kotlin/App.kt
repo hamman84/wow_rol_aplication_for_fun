@@ -36,4 +36,3 @@ fun getStartDestination(): Screen {
         LoginScreen()
     }
 }
-
