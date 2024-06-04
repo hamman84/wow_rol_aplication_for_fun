@@ -36,7 +36,7 @@ fun CharacterTag(
     val raceImage = getRaceImage(characters.race)
     ElevatedCard(
         modifier = modifier
-            .padding(10.dp)
+            .padding(6.dp)
             .clickable { onClickTag() },
         shape = ShapeDefaults.Small
     ){

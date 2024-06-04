@@ -1,7 +1,9 @@
 package domain
 
+import io.realm.kotlin.ext.realmDictionaryOf
 import io.realm.kotlin.ext.realmListOf
 import io.realm.kotlin.types.EmbeddedRealmObject
+import io.realm.kotlin.types.RealmDictionary
 import io.realm.kotlin.types.RealmList
 import io.realm.kotlin.types.RealmObject
 import io.realm.kotlin.types.annotations.PrimaryKey
@@ -23,6 +25,7 @@ class Character : EmbeddedRealmObject {
     var race: String = ""
     var luckScore: Int = 0
     var classType: String = ""
+    var competencies: RealmDictionary<Int> = realmDictionaryOf()
     var experience: Int = 0
     var stats: BasicStats? = null
     var inventory: Inventory? = null

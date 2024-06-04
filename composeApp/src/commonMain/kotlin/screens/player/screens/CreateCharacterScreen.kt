@@ -31,6 +31,7 @@ import domain.BasicStats
 import domain.Character
 import domain.User
 import domain.abilityList
+import io.realm.kotlin.ext.realmDictionaryOf
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -53,7 +54,7 @@ class CreateCharacterScreen : Screen {
         val activeAdd = remember { mutableStateOf(true) }
         val selectedClass = remember { mutableStateOf("") }
         val selectedRace = remember { mutableStateOf<Pair<String, Map<String, Int>>?>(null) }
-        val abilitySelected = remember { mutableListOf<String>() }
+        val abilitySelected = remember { mutableMapOf<String, Int>() }
         val abilityStates = remember { mutableStateOf(abilityList.associate { it.statOwner to 0 }) }
 
         Scaffold(
@@ -179,15 +180,26 @@ class CreateCharacterScreen : Screen {
                         activeAdd.value = remainingPoints.value != 0
                     }
                 )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    if (selectedClass.value == "Pícaro"){
+                        "Selecciona 2 competencias + 1 por clase Pícaro"
+                    }else{
+                        "Selecciona 2 competencias"
+                    }
+                )
+
                 Spacer(modifier = Modifier.height(8.dp))
 
                 AbilityRadioButtons(
                     abilityStates = abilityStates.value,
+                    selectedClass = selectedClass.value,
                     onAbilitySelected = { ability, isChecked ->
                         abilityStates.value = abilityStates.value.toMutableMap().apply {
                             if (isChecked){
                                 put(ability, 2)
-                                abilitySelected.add(ability)
+                                abilitySelected[ability] = 2
                             }else {
                                 remove(ability)
                                 abilitySelected.remove(ability)
@@ -212,6 +224,10 @@ class CreateCharacterScreen : Screen {
                                         name = charName.value
                                         classType = selectedClass.value
                                         race = raceName
+                                        competencies = realmDictionaryOf()
+                                        abilitySelected.forEach { (ability, value) ->
+                                            competencies[ability] = value
+                                        }
                                         luckScore = 0
                                         level = 1
                                         experience = 60

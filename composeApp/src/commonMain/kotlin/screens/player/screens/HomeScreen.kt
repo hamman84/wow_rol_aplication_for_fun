@@ -81,7 +81,7 @@ class HomeScreen : Screen {
                 ){
                     items(characters){pnj ->
                         CharacterTag(
-                            modifier = Modifier.padding(horizontal = 16.dp),
+                            modifier = Modifier.padding(horizontal = 5.dp),
                             characters = pnj,
                             onClickTag = {navigator.push(CharacterScreen(pnj))}
                         )
