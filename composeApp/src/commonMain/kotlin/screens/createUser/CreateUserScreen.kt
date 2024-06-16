@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.painterResource
 import rol_game.composeapp.generated.resources.Res
 import rol_game.composeapp.generated.resources.pj_creation_bg
 import screens.login.LoginScreen
+import ui.theme.gameLightScheme
 import ui.theme.lightScheme
 
 class CreateUserScreen : Screen {
@@ -46,7 +47,7 @@ class CreateUserScreen : Screen {
         val pass = remember { mutableStateOf("") }
         val snackbarHostState = remember { SnackbarHostState() }
 
-        MaterialTheme(colorScheme = lightScheme) {
+        MaterialTheme(colorScheme = gameLightScheme) {
 
             Scaffold(
                 snackbarHost = { SnackbarHost(hostState = snackbarHostState) }

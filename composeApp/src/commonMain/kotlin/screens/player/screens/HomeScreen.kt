@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,6 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.lifecycle.LifecycleEffect
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -29,6 +31,7 @@ import kotlinx.coroutines.launch
 import screens.login.LoginScreen
 import screens.player.components.CharacterTag
 import screens.player.models.HomeViewModel
+import screens.player.models.UiState
 
 
 class HomeScreen : Screen {
@@ -40,19 +43,19 @@ class HomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val characters = viewModel.data.value
         val scope = rememberCoroutineScope()
-
+        val uiState = viewModel.uiState.value
 
         Scaffold(
             floatingActionButton = {
                 LargeFloatingActionButton(
-                    onClick = {navigator.push(CreateCharacterScreen())}
-                ){
+                    onClick = { navigator.push(CreateCharacterScreen()) }
+                ) {
                     Icon(Icons.Filled.Add, contentDescription = null)
                 }
             },
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = { Text(text = "Personajes de: ${viewModel.activeUser?.id}") },
+                    title = { Text(text = "Personajes de: ${viewModel.playerName.value}") },
                     actions = {
                         IconButton(
                             onClick = {
@@ -67,26 +70,49 @@ class HomeScreen : Screen {
                 )
             }
         ) {
-            if (characters.isEmpty()){
-                Box(
-                    modifier = Modifier.fillMaxSize().padding(it),
-                    contentAlignment = Alignment.Center
-                ){
-                    Text(text = "No tienes personajes, créalos!!")
-                }
-            }else{
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize().padding(it),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ){
-                    items(characters){pnj ->
-                        CharacterTag(
-                            modifier = Modifier.padding(horizontal = 5.dp),
-                            characters = pnj,
-                            onClickTag = {navigator.push(CharacterScreen(pnj))}
-                        )
+            when (uiState) {
+                UiState.LOADING -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize().padding(it),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
                     }
                 }
+
+                UiState.SUCCESS -> {
+                    if (characters.isEmpty()) {
+                        Box(
+                            modifier = Modifier.fillMaxSize().padding(it),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = "No tienes personajes, créalos!!")
+                        }
+                    } else {
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize().padding(it),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            items(characters) { pnj ->
+                                CharacterTag(
+                                    modifier = Modifier.padding(horizontal = 5.dp),
+                                    characters = pnj,
+                                    onClickTag = { navigator.push(CharacterScreen(pnj)) }
+                                )
+                            }
+                        }
+                    }
+                }
+
+                UiState.ERROR -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize().padding(it),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Error al cargar los personajes")
+                    }
+                }
+
             }
         }
     }

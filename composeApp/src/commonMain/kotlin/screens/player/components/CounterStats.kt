@@ -5,8 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -26,12 +29,15 @@ fun CounterStats(
     val points = remember { mutableStateOf(initialPoints) }
 
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().padding(start = 45.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ){
         Box(modifier = Modifier.weight(.5f)){
-            Text(text = "$abilityName:")
+            Text(
+                text = "$abilityName:",
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
 
         Row(
@@ -40,6 +46,7 @@ fun CounterStats(
             horizontalArrangement = Arrangement.Center
         ){
             Button(
+                shape = CircleShape,
                 onClick = {
                     if (points.value > 0){
                         points.value --
@@ -48,9 +55,13 @@ fun CounterStats(
                 }
             ){ Text("-") }
             Spacer(modifier = Modifier.width(18.dp))
-            Text(text = "${points.value}")
+            Text(
+                text = "${points.value}",
+                color = MaterialTheme.colorScheme.onSurface
+            )
             Spacer(modifier = Modifier.width(18.dp))
             Button(
+                shape = CircleShape,
                 enabled = activeAdd,
                 onClick = {
                     if (points.value < 16) {

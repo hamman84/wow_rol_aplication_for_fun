@@ -1,22 +1,24 @@
 package data
 
 import domain.Character
-import domain.User
+import domain.Player
+import io.realm.kotlin.mongodb.User
 import kotlinx.coroutines.flow.Flow
 import org.mongodb.kbson.ObjectId
 
 interface MongoRepository {
     fun configureRealm()
-    fun getUsers(): Flow<List<User>>
+    fun getPlayers(): Flow<List<Player>>
     fun getCharacters(): Flow<List<Character>>
-    suspend fun loginUser(email: String, password: String)
-    suspend fun getUserById(id: String): Boolean
-    suspend fun addUser(newUser: User)
-    suspend fun updateUser(selectedUser: User)
-    suspend fun logoutUser(selectedUser: io.realm.kotlin.mongodb.User)
-    suspend fun deleteUser(id: ObjectId)
-    suspend fun addCharacter(userChar: Character)
-    suspend fun updateCharacter(userChar: Character)
-    suspend fun deleteCharacter(userChar: Character)
+    suspend fun loginPlayer(email: String, password: String)
+    suspend fun getPlayerById(id: String): Player?
+    suspend fun getPLayerName(): String?
+    suspend fun addPlayer(newUser: Player)
+    suspend fun upsertPlayer(userId: String, newCharacter: Character)
+    suspend fun logoutPlayer(selectedUser: User)
+    suspend fun deletePlayer(id: ObjectId)
+    suspend fun addCharacter(playerName: String, newCharacter: Character)
+    suspend fun updateCharacter(playerId: String, updatedCharacter: Character)
+    suspend fun deleteCharacter(playerId: String, characterName: String)
 
 }

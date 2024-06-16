@@ -10,11 +10,10 @@ import io.realm.kotlin.types.annotations.PrimaryKey
 import org.mongodb.kbson.BsonObjectId
 
 
-class User : RealmObject {
+class Player : RealmObject {
     @PrimaryKey
     var _id: BsonObjectId = BsonObjectId()
     var userName: String = ""
-    var userPass: String = ""
     var characters: RealmList<Character> = realmListOf()
     var owner_id: String = ""
 }
@@ -34,7 +33,7 @@ class Character : EmbeddedRealmObject {
 }
 
 val classList = listOf(
-    "Paladin",
+    "Paladín",
     "Guerrero",
     "Sacerdote",
     "Pícaro",
@@ -45,13 +44,17 @@ val classList = listOf(
     "Brujo",
     "Mago",
     "Monje",
-    "Caballero de la Muerte",
-    "Evocador"
+    "Caballero de la Muerte"
 )
 
 data class Race(
     val raceName: String,
     val racialStats: Map<String, Int>
+)
+
+data class ClassAbility(
+    val classType: String,
+    val abilityContent: List<CharacterAbility> = emptyList()
 )
 
 data class CharacterAbility(

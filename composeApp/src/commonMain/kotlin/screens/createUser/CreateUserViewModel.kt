@@ -2,10 +2,7 @@ package screens.createUser
 
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
-import data.MongoDB
-import domain.User
 import io.realm.kotlin.mongodb.App
-import io.realm.kotlin.mongodb.Credentials
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

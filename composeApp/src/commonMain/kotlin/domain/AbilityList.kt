@@ -20,9 +20,9 @@ val abilityList = listOf(
         abilityClass = mapOf(
             "Arcanos" to 0,
             "Historia" to 0,
-            "Investigacóns" to 0,
+            "Investigación" to 0,
             "Naturaleza" to 0,
-            "Religion" to 0
+            "Religión" to 0
         )
     ),
     CharacterAbility(

@@ -6,10 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
+import data.MongoDB.user
 import io.realm.kotlin.mongodb.App
 import screens.login.LoginScreen
 import screens.player.screens.HomeScreen
 import ui.theme.darkScheme
+import ui.theme.gameDarkScheme
+import ui.theme.gameLightScheme
 import ui.theme.lightScheme
 import util.Constants.APP_ID
 
@@ -18,7 +21,7 @@ import util.Constants.APP_ID
 fun App() {
 
     val colors by mutableStateOf(
-        if (isSystemInDarkTheme()) darkScheme else lightScheme
+        if (isSystemInDarkTheme()) gameDarkScheme else gameLightScheme
     )
 
     MaterialTheme(colorScheme = colors) {
@@ -29,8 +32,7 @@ fun App() {
 }
 
 fun getStartDestination(): Screen {
-    val user = App.create(APP_ID).currentUser
-    return if (user != null) {
+    return if (user?.loggedIn == true) {
         HomeScreen()
     } else {
         LoginScreen()

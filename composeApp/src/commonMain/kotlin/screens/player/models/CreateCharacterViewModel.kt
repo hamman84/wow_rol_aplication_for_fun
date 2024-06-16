@@ -3,7 +3,7 @@ package screens.player.models
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import data.MongoDB
-import domain.User
+import domain.Character
 import io.realm.kotlin.mongodb.App
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -12,19 +12,19 @@ import util.Constants.APP_ID
 
 class CreateCharacterViewModel: ScreenModel {
 
-    val user = App.create(APP_ID).currentUser!!.id
+    val userId = App.create(APP_ID).currentUser!!.id
 
-    suspend fun createCharacter(pj: User) {
+    suspend fun createPlayerAndCharacter(userId: String, newCharacter: Character) {
         screenModelScope.launch {
             try {
                 withContext(Dispatchers.IO) {
-                    MongoDB.addUser(newUser = pj.apply {
-                        owner_id = user
-                    })
+
+                    MongoDB.upsertPlayer(userId, newCharacter)
+
                 }
 
             } catch (e: Exception) {
-                println(e.message)
+                println("Error creating player and character: ${e.message}")
             }
         }
     }
